@@ -1,6 +1,6 @@
 .DS_Store
 node_modules
-/dist
+#action testing sorry# /dist
 
 # local env files
 .env.local
