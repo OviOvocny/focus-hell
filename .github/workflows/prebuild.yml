@@ -1,0 +1,42 @@
+name: Prebuild app
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: npm install, build, and test
+      env:
+        CI: true
+      run: |
+        npm ci
+        npm run build --if-present
+    - name: Commit to repository
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COMMIT_MSG: |
+          prebuild app
+          skip-checks: true
+      run: |
+        # Hard-code user configuration
+        git config user.email "werint.pp@gmail.com"
+        git config user.name "OviOvocny"
+        # Update origin with token
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        # Checkout the branch so we can push back to it
+        git checkout master
+        git add .
+        # Only commit and push if we have changes
+        git diff --quiet && git diff --staged --quiet || (git commit -m "${COMMIT_MSG}"; git push origin master)
