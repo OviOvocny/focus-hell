@@ -29,6 +29,15 @@
     "stylus-loader": "^3.0.2",
     "vue-template-compiler": "^2.6.10"
   },
+  "vue": {
+    "pwa": {
+      "name": "Focus Hell",
+      "themeColor": "#ee5d3d",
+      "msTileColor": "#ee5d3d",
+      "appleMobileWebAppCapable": "yes",
+      "appleMobileWebAppStatusBarStyle": "black-translucent"
+    }
+  },
   "eslintConfig": {
     "root": true,
     "env": {

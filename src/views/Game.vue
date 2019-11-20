@@ -1,13 +1,17 @@
 <template>
-  <div class="home">
-    <logo class="home-logo"/>
+  <div class="controls">
+    <desk :grid="8" :cards="Array(64)" />
   </div>
 </template>
 
 <script>
+import Desk from '@/components/Desk'
 
 export default {
-  name: 'home'
+  name: 'game',
+  components: {
+    Desk
+  }
 }
 </script>
 

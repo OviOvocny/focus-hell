@@ -4,7 +4,11 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
+import Logo from '@/components/Logo'
+
 Vue.config.productionTip = false
+
+Vue.component('logo', Logo)
 
 new Vue({
   router,
