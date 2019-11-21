@@ -4,6 +4,14 @@
   </div>
 </template>
 
+<script>
+export default {
+  created () {
+    this.$store.dispatch('bindUser')
+  }
+}
+</script>
+
 <style lang="stylus">
 :root
   --primary #ee5d3d

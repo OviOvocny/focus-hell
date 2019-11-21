@@ -3,16 +3,28 @@
     class="desk"
     :style="{'--grid-size': grid}"
   >
-    <card v-for="(c, i) in cards" :key="i" />
+    <card v-for="(card, i) in deck.cards" :key="i" />
   </main>
 </template>
 
 <script>
 import Card from '@/components/Card'
 export default {
-  props: {
-    cards: Array,
-    grid: Number
+  computed: {
+    deck () {
+      return this.$store.state.game.deck
+    },
+    grid () {
+      if (!this.deck.cards) return 0
+      const deckSize = this.deck.cards.length
+      if (deckSize <= 16) {
+        return 4
+      } else if (deckSize <= 36) {
+        return 6
+      } else {
+        return 8
+      }
+    }
   },
   components: {
     Card

@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <logo class="home-logo"/>
+    <logo full class="home-logo"/>
+    <btn to="/play">LOL</btn>
   </div>
 </template>
 

@@ -1,14 +1,21 @@
 <template>
   <div class="controls">
-    <desk :grid="8" :cards="Array(64)" />
+    <span>{{user.name}}</span>
+    <desk />
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Desk from '@/components/Desk'
 
 export default {
   name: 'game',
+  data () {
+    return {
+    }
+  },
+  computed: mapState(['user', 'game']),
   components: {
     Desk
   }
@@ -16,9 +23,5 @@ export default {
 </script>
 
 <style lang="stylus">
-.home-logo
-  margin auto
-  svg
-    max-height 300px
-    fill white
+
 </style>
