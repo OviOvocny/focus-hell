@@ -5,11 +5,13 @@ import router from './router'
 import store from './store'
 
 import Logo from '@/components/Logo'
+import Avatar from '@/components/Avatar'
 import Button from '@/components/controls/Button'
 
 Vue.config.productionTip = false
 
 Vue.component('logo', Logo)
+Vue.component('avatar', Avatar)
 Vue.component('btn', Button)
 
 new Vue({

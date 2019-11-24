@@ -1,16 +1,42 @@
 <template>
-  <div :class="['card', {flipped}]">
+  <div :class="['card', { turned, turnable, off }]" @click.passive="turn">
     <div class="card-side back">
       <logo style="opacity: .5" />
     </div>
-    <div class="card-side face"></div>
+    <div class="card-side face">
+      <img class="card-image" :src="src">
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    flipped: Boolean
+    index: Number,
+    src: {
+      type: String,
+      default: '/img/fh-full.svg'
+    },
+    turned: Boolean,
+    collected: Boolean
+  },
+  data () {
+    return {
+    }
+  },
+  computed: {
+    turnable () {
+      return this.$store.getters.canTurn
+    },
+    off () {
+      return !this.$store.getters.isSinglePlayer && this.collected
+    }
+  },
+  methods: {
+    turn () {
+      this.$store.dispatch('selectCard', this.index)
+      this.$parent.$emit('illegal')
+    }
   }
 }
 </script>
@@ -19,10 +45,16 @@ export default {
 .card
   position relative
   transform-style preserve-3d
-  transition transform .5s var(--ease-out-back)
-  cursor pointer
-  &.flipped
+  transition transform .4s var(--ease-out-back), opacity .3s
+  cursor not-allowed
+  &.turnable
+    cursor pointer
+  &.turned
     transform rotateY(-180deg)
+  &.off
+    cursor default
+    pointer-events none
+    //opacity 0
 
 .card-side
   position absolute
@@ -38,4 +70,13 @@ export default {
 .face
   transform rotateY(180deg)
   background-color #fff
+
+.card-image
+  position relative
+  background-color #eee
+  width 94%
+  height @width
+  margin 3%
+  border-radius 3%
+  object-fit cover
 </style>

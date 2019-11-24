@@ -1,14 +1,28 @@
 <template>
   <div class="home">
+    <avatar :user="user" level compact />
     <logo full class="home-logo"/>
-    <btn to="/play">LOL</btn>
+    <btn mega to="/play/oxGWY">Play</btn>
+    <input type="text" v-model="name">
+    <btn @click="setUser">Set</btn>
   </div>
 </template>
 
 <script>
-
+import { mapState } from 'vuex'
 export default {
-  name: 'home'
+  name: 'home',
+  data () {
+    return {
+      name: ''
+    }
+  },
+  computed: mapState(['user']),
+  methods: {
+    setUser () {
+      this.$store.dispatch('tryUser', this.name)
+    }
+  }
 }
 </script>
 

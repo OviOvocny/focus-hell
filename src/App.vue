@@ -6,8 +6,17 @@
 
 <script>
 export default {
+  data () {
+    return {
+    }
+  },
+  computed: {
+    userId () {
+      return localStorage.getItem('userId')
+    }
+  },
   created () {
-    this.$store.dispatch('bindUser')
+    this.$store.dispatch('bindUser', this.userId)
   }
 }
 </script>
@@ -16,6 +25,7 @@ export default {
 :root
   --primary #ee5d3d
   --primary-stop #ee3d3d
+  --primary-text #790000
   --secondary #ee3da7
   --bg #351515
 
@@ -43,4 +53,16 @@ a
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
   text-align center
+
+.text-block
+  display inline-block
+  font-weight bold
+  background-color white
+  padding .3em .5em
+  margin 0 .15em
+  color var(--bg)
+  transition background-color .5s
+  &.primary
+    background-color var(--primary)
+    color white
 </style>

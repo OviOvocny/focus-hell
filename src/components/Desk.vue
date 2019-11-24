@@ -1,22 +1,30 @@
 <template>
   <main
     class="desk"
-    :style="{'--grid-size': grid}"
+    :style="{
+      '--grid-size': grid,
+    }"
   >
-    <card v-for="(card, i) in deck.cards" :key="i" />
+    <card
+      v-for="(card, i) in game.cardState"
+      :key="i"
+      :index="parseInt(i)"
+      :src="deckMap[i]"
+      :turned="card != 0"
+      :collected="card > 0"
+    />
   </main>
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex'
 import Card from '@/components/Card'
 export default {
   computed: {
-    deck () {
-      return this.$store.state.game.deck
-    },
+    ...mapState(['game']),
+    ...mapGetters(['deckMap']),
     grid () {
-      if (!this.deck.cards) return 0
-      const deckSize = this.deck.cards.length
+      const deckSize = this.game.deck.cards.length
       if (deckSize <= 16) {
         return 4
       } else if (deckSize <= 36) {
