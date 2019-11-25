@@ -25,7 +25,7 @@
       </div>
       <div>
         <div>{{game.gameState.turns}} turns</div>
-        <btn mega @click="signalReady" :disabled="game.turnActions.length < 2">End {{playing ? 'turn' : 'observing'}}</btn>
+        <btn mega @click="signalReady" :disabled="game.turnActions.length < 2">{{ endButtonText }}</btn>
       </div>
     </div>
   </div>
@@ -50,11 +50,19 @@ export default {
   },
   computed: {
     ...mapState(['user', 'game']),
-    ...mapGetters(['match', 'theme', 'playing'])
+    ...mapGetters(['match', 'theme', 'playing', 'done']),
+    endButtonText () {
+      if (this.done) {
+        return 'Waiting...'
+      } else {
+        return this.playing ? 'End turn' : 'End observing'
+      }
+    }
   },
   created () {
     this.$store.dispatch('bindGame', this.$route.params.id).then(() => {
       this.ready = true
+      this.$store.dispatch('getDeckMap')
     })
   },
   methods: {

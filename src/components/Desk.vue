@@ -17,14 +17,13 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import Card from '@/components/Card'
 export default {
   computed: {
-    ...mapState(['game']),
-    ...mapGetters(['deckMap']),
+    ...mapState(['game', 'deckMap']),
     grid () {
-      const deckSize = this.game.deck.cards.length
+      const deckSize = this.game.deck.size
       if (deckSize <= 16) {
         return 4
       } else if (deckSize <= 36) {
@@ -56,6 +55,6 @@ export default {
   .desk
     width 100vw
     height 100vw
-    perspective 100vw
+    perspective 120vw
 
 </style>

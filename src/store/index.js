@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import db from './firestore'
+import { firestore as db } from '@/modules/firebase'
+import deckMap from '@/modules/deckMap'
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
 import { firestore } from 'firebase'
-import { shuffle } from 'shuffle-seed'
 
 db.enablePersistence().catch(e => {
   if (e.code === 'failed-precondition') {
@@ -21,7 +21,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: {},
-    game: {}
+    game: {},
+    deckMap: []
   },
   getters: {
     theme (state) {
@@ -32,9 +33,6 @@ export default new Vuex.Store({
         '--primary-text': `hsl(${c.h - 10},${c.s + 15}%,${c.l - 35}%)`
       }
     },
-    deckMap (state) {
-      return shuffle(state.game.deck.cards.concat(state.game.deck.cards), state.game.id)
-    },
     playerIndex (state) {
       return Object.keys(state.game.players).find(key => state.game.players[key].id === state.user.id)
     },
@@ -43,11 +41,14 @@ export default new Vuex.Store({
         return false
       } else {
         const [i, j] = state.game.turnActions
-        return getters.deckMap[i] === getters.deckMap[j]
+        return state.deckMap[i] === state.deckMap[j]
       }
     },
     playing (state, getters) {
       return state.game.gameState.currentPlayer === getters.playerIndex
+    },
+    done (state) {
+      return state.game.readyToEnd.includes(state.user.id)
     },
     canTurn (state, getters) {
       return state.game.turnActions.length < 2 && getters.playing
@@ -57,7 +58,10 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    ...vuexfireMutations
+    ...vuexfireMutations,
+    setDeckMap (state, map) {
+      state.deckMap = map
+    }
   },
   actions: {
     tryUser: firestoreAction(({ bindFirestoreRef }, userName) => {
@@ -77,6 +81,9 @@ export default new Vuex.Store({
     bindGame: firestoreAction(({ bindFirestoreRef }, gameId) => {
       return bindFirestoreRef('game', db.collection('games').doc(gameId))
     }),
+    getDeckMap ({ state, commit }) {
+      deckMap(state.game.deck.id, state.game.id).then(map => commit('setDeckMap', map))
+    },
     // Actions
     selectCard: firestoreAction(({ state, getters, dispatch }, index) => {
       if (
@@ -141,7 +148,7 @@ export default new Vuex.Store({
     }),
     resetGame: firestoreAction(({ state }) => {
       const cardStateClean = {}
-      for (let i = 0; i < state.game.deck.cards.length * 2; i++) {
+      for (let i = 0; i < state.game.deck.size; i++) {
         cardStateClean[i] = 0
       }
       db.collection('games').doc(state.game.id)
