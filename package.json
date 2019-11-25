@@ -37,7 +37,7 @@
     "pwa": {
       "workboxOptions": {
         "globIgnores": [
-          "**/_redirects"
+          "_redirects"
         ]
       },
       "name": "Focus Hell",
