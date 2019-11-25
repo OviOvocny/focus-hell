@@ -35,6 +35,11 @@
   },
   "vue": {
     "pwa": {
+      "workboxOptions": {
+        "globIgnores": [
+          "**/_redirects"
+        ]
+      },
       "name": "Focus Hell",
       "themeColor": "#ee5d3d",
       "msTileColor": "#ee5d3d",
