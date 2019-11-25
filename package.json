@@ -38,7 +38,7 @@
       "workboxOptions": {
         "skipWaiting": true,
         "clientsClaim": true,
-        "globIgnores": [
+        "exclude": [
           "_redirects"
         ]
       },
