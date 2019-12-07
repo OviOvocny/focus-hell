@@ -59,11 +59,12 @@ export default {
 .mainmenu
   display flex
   justify-content center
+  flex-wrap wrap
   margin 5em auto
   max-width 900px
   .fh-btn
     //padding 1em 2em
-    margin 0 1em
+    margin .5em 1em
 
 a.fh-btn.big-icon
   padding 1em 4em
@@ -85,6 +86,7 @@ a.fh-btn.big-icon
   width 100vw
   display flex
   justify-content space-between
+  flex-wrap wrap
   align-items center
   padding 2em 3em
   .fh-btn

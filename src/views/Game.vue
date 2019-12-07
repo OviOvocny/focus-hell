@@ -121,6 +121,10 @@ export default {
   border-radius 2em
   box-shadow 0 0 10em 2em var(--bg)
   background-color white
+@media (orientation portrait)
+  .qr
+    width 90vw
+    height @width
 
 .swap-enter-active, .swap-leave-active
   transition transform .4s
@@ -201,6 +205,20 @@ export default {
   .controls
     margin 0 1em
     flex-direction row
+@media (max-height 400px), (max-width 400px)
+  .controls
+    font-size .7rem
+    .fh-btn
+      font-size 1.2rem
+      padding .3em .5em
+    .counter
+      font-size 1.5em
+    .avatar
+      .info
+        font-size 1rem
+      .image
+        width 50px
+        height @width
 
 .player-corner
   display flex
