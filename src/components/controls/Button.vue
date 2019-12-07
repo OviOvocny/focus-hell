@@ -25,9 +25,12 @@ export default {
 
 <style lang="stylus">
 .fh-btn
+  position relative
   font-size 1rem
   font-family inherit
-  display inline-block
+  justify-content center
+  align-items center
+  display inline-flex
   padding .4em .7em
   background-color transparent
   color white
@@ -70,6 +73,10 @@ export default {
       border-color alpha(white, 50%)
       &:hover
         box-shadow none
+
+    & img
+      height 1.4em
+      margin-left .5em
 
 @keyframes bop
   30%

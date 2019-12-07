@@ -1,40 +1,43 @@
 <template>
-  <div
-    v-if="ready"
-    class="game"
-    :style="theme"
-  >
-    <!-- Split controls 1 -->
-    <div class="controls controls-left">
-      <div>
-        <btn mega to="/">Close</btn>
-        <btn mega @click="resetGame">Start over</btn>
+  <transition name="swap" mode="out-in">
+    <div
+      key=1
+      v-if="ready"
+      class="game"
+      :style="theme"
+    >
+      <!-- Split controls 1 -->
+      <div class="controls controls-left">
+        <div>
+          <btn mega to="/">Close</btn>
+          <btn mega @click="resetGame">Start over</btn>
+        </div>
+        <div>
+          <!-- pile -->
+          <avatar :user="game.players['1']" live></avatar>
+        </div>
       </div>
-      <div>
-        <!-- pile -->
-        <avatar :user="game.players['1']" live></avatar>
+      <!-- Main play area -->
+      <desk class="desk" @illegal="illegalFeedback" />
+      <!-- Split controls 2 -->
+      <div class="controls controls-right">
+        <div>
+          <avatar v-if="game.players['2']" :user="game.players['2']" live></avatar>
+          <!-- pile -->
+        </div>
+        <div>
+          <div>{{game.gameState.turns}} turns</div>
+          <btn mega class="endButton" @click="signalReady" :disabled="game.turnActions.length < 2 || done">{{ endButtonText }}</btn>
+        </div>
       </div>
     </div>
-    <!-- Main play area -->
-    <desk class="desk" @illegal="illegalFeedback" />
-    <!-- Split controls 2 -->
-    <div class="controls controls-right">
+    <div key=2 v-else class="loading-screen">
       <div>
-        <avatar v-if="game.players['2']" :user="game.players['2']" live></avatar>
-        <!-- pile -->
-      </div>
-      <div>
-        <div>{{game.gameState.turns}} turns</div>
-        <btn mega @click="signalReady" :disabled="game.turnActions.length < 2">{{ endButtonText }}</btn>
+        <logo />
+        <div class="loading-text">Connecting...</div>
       </div>
     </div>
-  </div>
-  <div v-else class="loading-screen">
-    <div>
-      <logo />
-      <div class="loading-text">Connecting...</div>
-    </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -78,6 +81,43 @@ export default {
 </script>
 
 <style lang="stylus">
+.swap-enter-active, .swap-leave-active
+  transition transform .1s
+
+.swap-enter, .swap-leave-to
+  transform scale(1.2)
+  opacity 0
+
+.endButton
+  position relative
+  &:not(:disabled)
+    animation bigbop .4s
+  &::before
+    position absolute
+    top 0
+    left calc(50% - 1em)
+    z-index -1
+    content ''
+    width 2em
+    height @width
+    background-color white
+    opacity 0
+    border-radius 10em
+.endButton:not(:disabled)::before
+  opacity .8
+  animation megapop 1.3s ease-out infinite
+
+@keyframes megapop
+  10%
+    transform none
+  70%, 100%
+    transform scale(10)
+    opacity 0
+
+@keyframes bigbop
+  30%
+    transform scaleX(1.4) scaleY(.7)
+
 .loading-screen
   display flex
   justify-content center

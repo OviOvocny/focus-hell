@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view/>
+    <transition name="fade" mode="out-in">
+      <router-view/>
+    </transition>
   </div>
 </template>
 
@@ -30,6 +32,16 @@ export default {
   --bg #351515
 
   --ease-out-back cubic-bezier(0.435, 0.010, 0.100, 1.415)
+
+.fade-enter-active, .fade-leave-active
+  transition opacity .2s, transform .3s var(--ease-out-back)
+
+.fade-enter
+  opacity 0
+  transform scale(.9)
+.fade-leave-to
+  opacity 0
+  transform scale(1.1)
 
 html
   box-sizing border-box
