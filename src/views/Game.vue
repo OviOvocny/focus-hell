@@ -1,49 +1,55 @@
 <template>
-  <transition name="swap" mode="out-in">
-    <div
-      key=1
-      v-if="ready"
-      class="game"
-      :style="theme"
-    >
-      <!-- Split controls 1 -->
-      <div class="controls controls-left">
-        <div>
-          <btn mega to="/">Close</btn>
-          <btn mega @click="resetGame">Start over</btn>
-        </div>
-        <div class="player-corner">
-          <pile :player-index="1" />
-          <avatar :user="game.players['1']" live></avatar>
-        </div>
-      </div>
-      <!-- Main play area -->
-      <desk class="desk" @illegal="illegalFeedback" />
-      <!-- Split controls 2 -->
-      <div class="controls controls-right">
-        <div class="player-corner">
-          <avatar v-if="game.players['2']" :user="game.players['2']" live></avatar>
-          <pile :player-index="2" />
-        </div>
-        <div>
-          <div class="turn-count">
-            <b>{{game.gameState.turns}}</b>
-            turns
+  <div>
+    <transition name="fade">
+      <div class="qr" ref="qr" id="qr" v-show="qrShown" @click="qrShown = false"></div>
+    </transition>
+    <transition name="swap" mode="out-in">
+      <div
+        key=1
+        v-if="ready"
+        class="game"
+        :style="theme"
+      >
+        <!-- Split controls 1 -->
+        <div class="controls controls-left">
+          <div>
+            <btn mega to="/">Close</btn>
+            <btn mega @click="resetGame">Start over</btn>
           </div>
-          <btn mega class="endButton" @click="signalReady" :disabled="game.turnActions.length < 2 || done">{{ endButtonText }}</btn>
+          <div class="player-corner">
+            <pile :player-index="1" />
+            <avatar :user="game.players['1']" live></avatar>
+          </div>
+        </div>
+        <!-- Main play area -->
+        <desk class="desk" @illegal="illegalFeedback" />
+        <!-- Split controls 2 -->
+        <div class="controls controls-right">
+          <div class="player-corner">
+            <avatar v-if="game.players['2']" :user="game.players['2']" live @click.native="writeQR"></avatar>
+            <pile :player-index="2" />
+          </div>
+          <div>
+            <div class="turn-count">
+              <b>{{game.gameState.turns}}</b>
+              turns
+            </div>
+            <btn mega class="endButton" @click="signalReady" :disabled="game.turnActions.length < 2 || done">{{ endButtonText }}</btn>
+          </div>
         </div>
       </div>
-    </div>
-    <div key=2 v-else class="loading-screen">
-      <div>
-        <logo />
-        <div class="loading-text">Connecting...</div>
+      <div key=2 v-else class="loading-screen">
+        <div>
+          <logo />
+          <div class="loading-text">Connecting...</div>
+        </div>
       </div>
-    </div>
-  </transition>
+    </transition>
+  </div>
 </template>
 
 <script>
+import { BrowserQRCodeSvgWriter } from '@zxing/library'
 import { mapState, mapGetters, mapActions } from 'vuex'
 import Desk from '@/components/Desk'
 import Pile from '@/components/Pile'
@@ -52,7 +58,8 @@ export default {
   name: 'game',
   data () {
     return {
-      ready: false
+      ready: false,
+      qrShown: false
     }
   },
   computed: {
@@ -72,6 +79,7 @@ export default {
       this.$store.dispatch('getDeckMap')
       document.documentElement.style.setProperty('--bg-img', `url(${this.$store.state.game.deck.backImage})`)
       this.$store.commit('showImage')
+      new Audio('/sound/complete.mp3').play()
     })
   },
   beforeDestroy () {
@@ -81,6 +89,17 @@ export default {
     ...mapActions(['signalReady', 'endGame', 'resetGame']),
     illegalFeedback () {
 
+    },
+    writeQR () {
+      const qrGen = new BrowserQRCodeSvgWriter()
+      const base = 'https://fh.ovi.moe'
+      this.$refs.qr.innerHTML = ''
+      qrGen.writeToDom('#qr', `${base}/join/${this.game.id}`, 300, 300)
+      const svg = this.$refs.qr.querySelector('svg')
+      svg.removeAttribute('width')
+      svg.removeAttribute('height')
+      svg.setAttribute('viewBox', '0 0 300 300')
+      this.qrShown = true
     }
   },
   components: {
@@ -91,8 +110,20 @@ export default {
 </script>
 
 <style lang="stylus">
+.qr
+  position fixed
+  z-index 100
+  width 90vh
+  height @width
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  border-radius 2em
+  box-shadow 0 0 10em 2em var(--bg)
+  background-color white
+
 .swap-enter-active, .swap-leave-active
-  transition transform .1s
+  transition transform .4s
 
 .swap-enter, .swap-leave-to
   transform scale(1.2)

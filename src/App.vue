@@ -99,4 +99,17 @@ a
   &.primary
     background-color var(--primary)
     color white
+
+input
+  border .1em solid
+  background-color transparent
+  border-radius 5px
+  padding .5em 1em
+  color white
+  font-size 1rem
+
+.fh-btn.back-btn
+  position fixed
+  top 1em
+  left 1em
 </style>
