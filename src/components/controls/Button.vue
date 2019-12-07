@@ -31,12 +31,13 @@ export default {
   justify-content center
   align-items center
   display inline-flex
+  flex 1 0 5em
   padding .4em .7em
   background-color transparent
   color white
   border .1em solid
   border-radius 10em
-  min-width 5em
+
   text-decoration none
   cursor pointer
   transition .2s

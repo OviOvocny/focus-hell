@@ -18,6 +18,11 @@
     <div v-if="visibleHacks">
       <input type="text" v-model="name" @change="setUser">
     </div>
+    <div class="foot">
+      <btn to="/about">About</btn>
+      <span style="opacity:.7">©2019 Investor Torture Unit</span>
+      <btn to="/preferences">Preferences</btn>
+    </div>
   </div>
 </template>
 
@@ -42,7 +47,8 @@ export default {
 
 <style lang="stylus">
 .home
-  margin 2em 0
+  padding 2em 0
+  min-height 100vh
 
 .home-logo
   margin 1em auto
@@ -54,12 +60,34 @@ export default {
   display flex
   justify-content center
   margin 5em auto
+  max-width 900px
   .fh-btn
-    padding 1em 2em
+    //padding 1em 2em
     margin 0 1em
 
 a.fh-btn.big-icon
   padding 1em 4em
+  box-shadow 0 0 10em var(--primary)
+  z-index 2
   img
     transform scale(1.4)
+    transition transform .5s var(--ease-out-back)
+  &:hover
+    box-shadow 0 0 8em 1em var(--primary)
+    transform scale(1.2)
+    img
+      transform scale(1.8)
+
+.foot
+  position fixed
+  bottom 0
+  left 0
+  width 100vw
+  display flex
+  justify-content space-between
+  align-items center
+  padding 2em 3em
+  .fh-btn
+    flex-grow 0
+    flex-basis 8em
 </style>

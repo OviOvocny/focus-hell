@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <transition name="slowfade">
-      <div class="bgImg" v-show="$store.state.bgImg"></div>
-    </transition>
+    <div key="BG" class="bgImg" :class="{visibleBg: $store.state.bgImg}"></div>
     <transition name="fade" mode="out-in">
       <router-view/>
     </transition>
@@ -47,7 +45,7 @@ export default {
   transform scale(1.1)
 
 .slowfade-enter-active, .slowfade-leave-active
-  transition opacity 2s
+  transition opacity 2s linear
 
 .slowfade-enter, .slowfade-leave-to
   opacity 0
@@ -66,12 +64,18 @@ body
 
 .bgImg
   position fixed
+  z-index -1
   top 0
   left 0
   width 100vw
   height 100vh
-  opacity .3
+  opacity 0
+  filter blur(15px)
   background-image var(--bg-img)
+  transition opacity 5s, filter 5s
+  &.visibleBg
+    opacity .3
+    filter blur(4px)
 
 a
   color var(--primary)
