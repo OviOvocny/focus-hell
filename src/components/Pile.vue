@@ -9,6 +9,7 @@
       class="pile-card"
       :style="{transform: transforms[i], pointerEvents: 'none'}"
     />
+    <div class="counter" v-show="cards.length > 0">{{ Math.floor(cards.length / 2)}}</div>
   </div>
 </template>
 
@@ -20,7 +21,7 @@ export default {
   },
   data () {
     return {
-      transforms: []
+      transforms: Array(64).fill(0).map(c => `rotateY(180deg) rotateZ(${Math.random() * 20 - 10}deg)`)
     }
   },
   computed: {
@@ -53,8 +54,9 @@ export default {
 .pile
   perspective 100px
   position relative
-  width 8em
+  width calc(3em + 6vw)
   height @width
+  margin 1.5em
 
 .pile-card
   position absolute
@@ -62,4 +64,17 @@ export default {
   height @width
   top 5%
   left 5%
+
+.counter
+  position absolute
+  top -.5em
+  left @top
+  box-shadow .25em .25em 1em var(--bg)
+  width 2em
+  height @width
+  line-height @height
+  border-radius 1em
+  background-color var(--primary)
+  font-weight bold
+  border .1em solid
 </style>

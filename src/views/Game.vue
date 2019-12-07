@@ -12,7 +12,7 @@
           <btn mega to="/">Close</btn>
           <btn mega @click="resetGame">Start over</btn>
         </div>
-        <div>
+        <div class="player-corner">
           <pile :player-index="1" />
           <avatar :user="game.players['1']" live></avatar>
         </div>
@@ -21,12 +21,15 @@
       <desk class="desk" @illegal="illegalFeedback" />
       <!-- Split controls 2 -->
       <div class="controls controls-right">
-        <div>
+        <div class="player-corner">
           <avatar v-if="game.players['2']" :user="game.players['2']" live></avatar>
           <pile :player-index="2" />
         </div>
         <div>
-          <div>{{game.gameState.turns}} turns</div>
+          <div class="turn-count">
+            <b>{{game.gameState.turns}}</b>
+            turns
+          </div>
           <btn mega class="endButton" @click="signalReady" :disabled="game.turnActions.length < 2 || done">{{ endButtonText }}</btn>
         </div>
       </div>
@@ -67,7 +70,12 @@ export default {
     this.$store.dispatch('bindGame', this.$route.params.id).then(() => {
       this.ready = true
       this.$store.dispatch('getDeckMap')
+      document.documentElement.style.setProperty('--bg-img', `url(${this.$store.state.game.deck.backImage})`)
+      this.$store.commit('showImage')
     })
+  },
+  beforeDestroy () {
+    this.$store.commit('hideImage')
   },
   methods: {
     ...mapActions(['signalReady', 'endGame', 'resetGame']),
@@ -145,6 +153,9 @@ export default {
   .game
     flex-direction column
 
+.desk
+  align-self center
+
 .controls
   margin 1em 0
   flex 1 1 0em
@@ -159,4 +170,17 @@ export default {
   .controls
     margin 0 1em
     flex-direction row
+
+.player-corner
+  display flex
+  align-items center
+  flex-direction column
+@media (orientation portrait)
+  .player-corner
+    flex-direction row
+
+.turn-count
+  font-size 1.5em
+  b
+    font-size 2em
 </style>

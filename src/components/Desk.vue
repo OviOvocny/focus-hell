@@ -49,12 +49,20 @@ export default {
 
 .desk
   height 100vh
-  width 100vh
+  width @height
   perspective 100vh
 @media (orientation portrait)
   .desk
     width 100vw
-    height 100vw
-    perspective 120vw
+    height @width
+    perspective 100vw
 
+@media (orientation landscape) and (max-aspect-ratio 5/3)
+  .desk
+    width 65vw
+    height @width
+@media (max-aspect-ratio 3/4)
+  .desk
+    width 95vw
+    height @width
 </style>

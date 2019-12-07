@@ -22,7 +22,8 @@ export default new Vuex.Store({
   state: {
     user: {},
     game: {},
-    deckMap: []
+    deckMap: [],
+    bgImg: false
   },
   getters: {
     theme (state) {
@@ -62,6 +63,12 @@ export default new Vuex.Store({
     ...vuexfireMutations,
     setDeckMap (state, map) {
       state.deckMap = map
+    },
+    showImage (state) {
+      state.bgImg = true
+    },
+    hideImage (state) {
+      state.bgImg = false
     }
   },
   actions: {

@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <transition name="slowfade">
+      <div class="bgImg" v-show="$store.state.bgImg"></div>
+    </transition>
     <transition name="fade" mode="out-in">
       <router-view/>
     </transition>
@@ -43,6 +46,12 @@ export default {
   opacity 0
   transform scale(1.1)
 
+.slowfade-enter-active, .slowfade-leave-active
+  transition opacity 2s
+
+.slowfade-enter, .slowfade-leave-to
+  opacity 0
+
 html
   box-sizing border-box
 
@@ -54,6 +63,15 @@ body
   padding 0
   color white
   background-color var(--bg)
+
+.bgImg
+  position fixed
+  top 0
+  left 0
+  width 100vw
+  height 100vh
+  opacity .3
+  background-image var(--bg-img)
 
 a
   color var(--primary)
