@@ -55,7 +55,8 @@ export default new Vuex.Store({
     },
     isSinglePlayer (state) {
       return state.game.options.mode === 'single' || Object.keys(state.game.players).length === 1
-    }
+    },
+    collectedCards: state => index => Object.entries(state.game.cardState).filter(s => s[1] === index).map(c => state.deckMap[c[0]])
   },
   mutations: {
     ...vuexfireMutations,

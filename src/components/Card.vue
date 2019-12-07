@@ -1,5 +1,5 @@
 <template>
-  <div :class="['card', { turned, turnable, off }]" @click.passive="turn">
+  <div :class="['card', { turned, turnable, off, collected }]" @click.passive="turn">
     <div class="card-side back">
       <logo style="opacity: .5" />
     </div>
@@ -55,6 +55,8 @@ export default {
     cursor default
     pointer-events none
     //opacity 0
+  &.collected
+    transform rotateY(-180deg) scale(0)
 
 .card-side
   position absolute

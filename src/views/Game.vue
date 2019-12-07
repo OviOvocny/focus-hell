@@ -13,7 +13,7 @@
           <btn mega @click="resetGame">Start over</btn>
         </div>
         <div>
-          <!-- pile -->
+          <pile :player-index="1" />
           <avatar :user="game.players['1']" live></avatar>
         </div>
       </div>
@@ -23,7 +23,7 @@
       <div class="controls controls-right">
         <div>
           <avatar v-if="game.players['2']" :user="game.players['2']" live></avatar>
-          <!-- pile -->
+          <pile :player-index="2" />
         </div>
         <div>
           <div>{{game.gameState.turns}} turns</div>
@@ -43,6 +43,7 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import Desk from '@/components/Desk'
+import Pile from '@/components/Pile'
 
 export default {
   name: 'game',
@@ -75,7 +76,8 @@ export default {
     }
   },
   components: {
-    Desk
+    Desk,
+    Pile
   }
 }
 </script>
