@@ -15,7 +15,7 @@ export default {
   },
   computed: {
     userId () {
-      return localStorage.getItem('userId')
+      return localStorage.getItem('userId') || 'e7iI3rJTtr6Tw3Q6BMez'
     }
   },
   created () {
