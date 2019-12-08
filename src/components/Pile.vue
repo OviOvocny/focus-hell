@@ -19,7 +19,7 @@ export default {
   },
   data () {
     return {
-      transforms: Array(64).fill(0).map(c => `rotateY(180deg) rotateZ(${Math.random() * 20 - 10}deg)`)
+      transforms: Array(64).fill(0).map(c => `rotateZ(${Math.random() * 20 - 10}deg)`)
     }
   },
   computed: {
@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     getRandom () {
-      return `rotateY(180deg) rotateZ(${Math.random() * 20 - 10}deg)`
+      return `rotateZ(${Math.random() * 20 - 10}deg)`
     }
   },
   watch: {
@@ -37,7 +37,7 @@ export default {
       if (val.length !== prev.length) {
         this.transforms = []
         for (let i = 0; i < val.length; i++) {
-          this.transforms.push(`rotateY(180deg) rotateZ(${Math.random() * 20 - 10}deg)`)
+          this.transforms.push(`rotateZ(${Math.random() * 20 - 10}deg)`)
         }
       }
     }
