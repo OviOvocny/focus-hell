@@ -1,24 +1,25 @@
-# focus-hell
+# Focus Hell
+Projekt ITU 2019 – Hra Pexeso.
 
-## Project setup
+Ke spuštění dev serveru nebo sestavení je potřeba Node a npm.
+
+## Příprava projektu
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Vývojový server s hot-reload funkcí
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Sestavení pro nasazení do provozu
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### Kontrola linterem
 ```
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
