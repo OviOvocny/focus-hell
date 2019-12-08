@@ -1,9 +1,8 @@
 <template>
   <div class="pile">
-    <card
+    <img
       v-for="(c, i) in cards.slice(0, 8)"
       :key="i"
-      :index="i"
       :src="c"
       turned
       class="pile-card"
@@ -14,7 +13,6 @@
 </template>
 
 <script>
-import Card from '@/components/Card'
 export default {
   props: {
     playerIndex: Number
@@ -33,9 +31,6 @@ export default {
     getRandom () {
       return `rotateY(180deg) rotateZ(${Math.random() * 20 - 10}deg)`
     }
-  },
-  components: {
-    Card
   },
   watch: {
     cards (val, prev) {
@@ -59,11 +54,16 @@ export default {
   margin 1.5em
 
 .pile-card
+  display block
   position absolute
   width 90%
   height @width
   top 5%
   left 5%
+  background-color #eee
+  padding 3%
+  border-radius 3%
+  object-fit cover
 
 .counter
   position absolute
