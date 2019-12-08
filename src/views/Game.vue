@@ -184,6 +184,7 @@ export default {
   justify-content space-between
   flex-wrap wrap
   min-height 100vh
+  overflow hidden
 @media (orientation portrait)
   .game
     flex-direction column
