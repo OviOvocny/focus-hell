@@ -72,6 +72,7 @@ body
   opacity 0
   filter blur(15px)
   background-image var(--bg-img)
+  background-size cover
   transition opacity 5s, filter 5s
   &.visibleBg
     opacity .3

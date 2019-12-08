@@ -65,6 +65,7 @@ export default {
   .fh-btn
     //padding 1em 2em
     margin .5em 1em
+    z-index 3
 
 a.fh-btn.big-icon
   padding 1em 4em

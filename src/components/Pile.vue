@@ -1,7 +1,7 @@
 <template>
   <div class="pile">
     <card
-      v-for="(c, i) in cards"
+      v-for="(c, i) in cards.slice(0, 8)"
       :key="i"
       :index="i"
       :src="c"
