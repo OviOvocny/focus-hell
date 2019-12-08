@@ -12,7 +12,7 @@
       >
         <!-- Split controls 1 -->
         <div class="controls controls-left">
-          <div>
+          <div class="control-corner">
             <btn mega to="/">Close</btn>
             <btn mega @click="resetGame">Start over</btn>
           </div>
@@ -29,7 +29,7 @@
             <avatar v-if="game.players['2']" :user="game.players['2']" live @click.native="writeQR"></avatar>
             <pile :player-index="2" />
           </div>
-          <div>
+          <div class="control-corner">
             <div class="turn-count">
               <b>{{game.gameState.turns}}</b>
               turns
@@ -233,4 +233,13 @@ export default {
   font-size 1.5em
   b
     font-size 2em
+
+@media (orientation portrait)
+  .control-corner
+    display flex
+    flex 1 0 0
+    justify-content center
+    align-items center
+    flex-wrap wrap
+
 </style>
