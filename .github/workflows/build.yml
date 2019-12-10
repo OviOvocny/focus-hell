@@ -38,7 +38,7 @@ jobs:
         git add test/FE/src/main.js
         git commit -m "Fix server address derp 🔨" || true
         git add .
-        git commit -m "Build webadmin frontend 🚀"
+        git commit -m "Build webadmin frontend 🚀" || true
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
