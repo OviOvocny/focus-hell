@@ -1,0 +1,45 @@
+name: Build webadmin FE
+
+on:
+  push:
+    paths:
+      - 'test/FE/*'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Make ABSOLUTELY sure server address is LOCALHOST and NOTHING ELSE DEFINITELY YES REALLY
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        include: "test/FE/src/main.js"
+        find: "Vue\.config\.productionTip.*"
+        replace: "Vue.config.productionTip = false"
+    - name: npm install, build, and test
+      working-directory: test/FE
+      env:
+        CI: true
+      run: |
+        npm ci
+        npm run build --if-present
+    - name: Commit files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "Build FE" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: dev
