@@ -8,7 +8,7 @@ import Logo from '@/components/Logo'
 import Avatar from '@/components/Avatar'
 import Button from '@/components/controls/Button'
 
-Vue.config.productionTip = true // lolec. dew
+Vue.config.productionTip = false
 
 Vue.component('logo', Logo)
 Vue.component('avatar', Avatar)
