@@ -35,6 +35,8 @@ jobs:
       run: |
         git config --local user.email "adam.horak@ovi.moe"
         git config --local user.name "Webpacker"
+        git add test/FE/src/main.js
+        git commit -m "Fix server address derp 🔨" || true
         git add .
         git commit -m "Build webadmin frontend 🚀"
     - name: Push changes
