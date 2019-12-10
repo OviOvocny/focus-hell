@@ -3,7 +3,7 @@ name: Build webadmin FE
 on:
   push:
     paths:
-      - 'test/FE/**'
+      - 'webadmin/fitcrackFE/**'
 
 jobs:
   build:
@@ -21,11 +21,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Make ABSOLUTELY sure server address is LOCALHOST and NOTHING ELSE DEFINITELY YES REALLY
-      working-directory: test/FE/src
+      working-directory: webadmin/fitcrackFE/static
       run: |
-        sed -i 's/productionTip.*/productionTip = \'false\'/g' main.js
+        sed -i 's/serverAddress.*/serverAddress = \'http://localhost:5000\'/g' configuration.js
     - name: Install deps and build it
-      working-directory: test/FE
+      working-directory: webadmin/fitcrackFE
       env:
         CI: true
       run: |
@@ -35,7 +35,7 @@ jobs:
       run: |
         git config --local user.email "adam.horak@ovi.moe"
         git config --local user.name "Webpacker"
-        git add test/FE/src/main.js
+        git add webadmin/fitcrackFE/static/configuration.js
         git commit -m "Fix server address derp 🔨" || true
         git add .
         git commit -m "Build webadmin frontend 🚀" || true
