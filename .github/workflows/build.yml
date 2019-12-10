@@ -24,8 +24,8 @@ jobs:
       uses: jacobtomlinson/gha-find-replace@master
       with:
         include: "test/FE/src/main.js"
-        find: "Vue\.config\.productionTip.*"
-        replace: "Vue.config.productionTip = false"
+        find: "productionTip.*"
+        replace: "productionTip = false"
     - name: npm install, build, and test
       working-directory: test/FE
       env:
