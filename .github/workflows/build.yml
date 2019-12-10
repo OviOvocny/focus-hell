@@ -23,7 +23,7 @@ jobs:
     - name: Make ABSOLUTELY sure server address is LOCALHOST and NOTHING ELSE DEFINITELY YES REALLY
       working-directory: test/FE/src
       run: |
-        sed -i 's/productionTip.*/productionTip = \''false\''/g' main.js
+        sed -i 's/productionTip.*/productionTip = "false"/g' main.js
     - name: Install deps and build it
       working-directory: test/FE
       env:
