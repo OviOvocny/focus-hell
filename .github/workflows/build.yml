@@ -3,7 +3,7 @@ name: Build webadmin FE
 on:
   push:
     paths:
-      - 'test/FE/*'
+      - 'test/FE/**'
 
 jobs:
   build:
