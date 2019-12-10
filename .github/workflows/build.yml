@@ -33,9 +33,9 @@ jobs:
         npm run build --if-present
     - name: Commit files
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git commit -m "Build FE" -a
+        git config --local user.email "adam.horak@ovi.moe"
+        git config --local user.name "Webpacker"
+        git commit -m "Build webadmin frontend" -a
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
