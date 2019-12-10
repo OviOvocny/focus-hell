@@ -35,7 +35,7 @@ jobs:
       run: |
         git config --local user.email "adam.horak@ovi.moe"
         git config --local user.name "Webpacker"
-        git commit -m "Build webadmin frontend" -a
+        git commit -m "Build webadmin frontend 🚀" -a
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
